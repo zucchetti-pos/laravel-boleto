@@ -154,7 +154,7 @@ class Bb extends AbstractBoleto implements BoletoContract
             }
             break;
         case 7:
-            $numero = Util::numberFormatGeral($convenio, 7) . Util::numberFormatGeral($numero_boleto, 10);
+            $numero = in_array($this->getCarteira(), ['17']) ? Util::numberFormatGeral($numero_boleto, 17) : (Util::numberFormatGeral($convenio, 7) . Util::numberFormatGeral($numero_boleto, 10));
             break;
         default:
             throw new \Exception('O código do convênio precisa ter 4, 6 ou 7 dígitos!');
