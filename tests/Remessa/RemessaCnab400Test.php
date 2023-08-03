@@ -263,7 +263,7 @@ class RemessaCnab400Test extends TestCase
                 'valor' => 100.41,
                 'multa' => false,
                 'juros' => false,
-                'numero' => 1,
+                'numero' => 14000000000000001,
                 'numeroDocumento' => 1,
                 'pagador' => self::$pagador,
                 'diasBaixaAutomatica' => 2,
