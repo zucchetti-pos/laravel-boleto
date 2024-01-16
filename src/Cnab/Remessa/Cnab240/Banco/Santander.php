@@ -306,9 +306,13 @@ class Santander extends AbstractRemessa implements RemessaContract
      */
     public function getCodigoTransmissao()
     {
+        if ($this->getCodigoTransmissaoCustomizado()) {
+            return $this->getCodigoTransmissaoCustomizado();
+        }
+
         return Util::formatCnab('9', $this->getAgencia(), 4)
-        . Util::formatCnab('9', '0000', 4)
-        . Util::formatCnab('9', $this->getCodigoCliente(), 7);
+             . Util::formatCnab('9', '0000', 4)
+             . Util::formatCnab('9', $this->getCodigoCliente(), 7);
     }
 
     /**
