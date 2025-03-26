@@ -212,7 +212,7 @@ class Sicredi extends AbstractRemessa implements RemessaContract
         $this->add(67, 74, '00000000');
         $this->add(75, 89, Util::formatCnab('9', 0, 15, 2));
         if ($boleto->getMulta() > 0) {
-            $percentualMulta = number_format((($boleto->getMulta() * 100) / $boleto->getValor()), 2);
+            $percentualMulta = number_format(($boleto->getMulta() * 100), 2);
             $this->add(66, 66, '2'); // '2' = Percentual
             $this->add(67, 74, $boleto->getDataVencimento()->format('dmY'));
             $this->add(75, 89, Util::formatCnab('9', $percentualMulta, 15, 2));
