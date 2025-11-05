@@ -152,7 +152,7 @@ abstract class AbstractRemessa extends AbstractRemessaGeneric
     public function gerar()
     {
         if (!$this->isValid($messages)) {
-            throw new \Exception('Campos requeridos pelo banco, aparentam estar ausentes ' . $messages);
+            throw new \Exception('Campos requeridos pelo banco não estão preenchidos (' . $messages . '), ajuste e tente novamente.');
         }
 
         $stringRemessa = '';
