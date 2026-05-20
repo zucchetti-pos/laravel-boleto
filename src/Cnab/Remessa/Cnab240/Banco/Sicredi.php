@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: simetriatecnologia
@@ -91,7 +92,7 @@ class Sicredi extends AbstractRemessa implements RemessaContract
         $this->segmentoP($boleto);
         $this->segmentoQ($boleto);
         $this->segmentoR($boleto);
-        if($boleto->getSacadorAvalista()) {
+        if ($boleto->getSacadorAvalista()) {
             $this->segmentoY01($boleto);
         }
         return $this;
@@ -140,7 +141,7 @@ class Sicredi extends AbstractRemessa implements RemessaContract
         $this->add(110, 117, $boleto->getDataDocumento()->format('dmY'));
         $this->add(118, 118, $boleto->getJuros() ? '1' : '3'); //'1' = Valor por Dia, '3' = Isento
         $this->add(119, 126, $boleto->getJurosApos() == 0 ? '00000000' :
-               $boleto->getDataVencimentoApos()->format('dmY'));
+            $boleto->getDataVencimentoApos()->format('dmY'));
         $this->add(127, 141, Util::formatCnab('9', $boleto->getMoraDia(), 15, 2)); //Valor da mora/dia ou Taxa mensal
         $this->add(142, 142, '0'); // '1' = Valor Fixo Até a Data Informada
         $this->add(143, 150, $boleto->getDesconto() > 0 ? $boleto->getDataDesconto()->format('dmY') : '00000000');
@@ -262,8 +263,8 @@ class Sicredi extends AbstractRemessa implements RemessaContract
         if ($boleto->getStatus() == $boleto::STATUS_CUSTOM) {
             $this->add(16, 17, sprintf('%2.02s', $boleto->getComando()));
         }
-        $this->add(18, 18, strlen(Util::onlyNumbers($boleto->getPagador()->getDocumento())) == 14 ? 2 : 1);
-        $this->add(19, 33, Util::formatCnab('9', Util::onlyNumbers($boleto->getPagador()->getDocumento()), 15));
+        $this->add(18, 18, strlen(Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento())) == 14 ? 2 : 1);
+        $this->add(19, 33, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento()), 15));
         $this->add(34, 73, Util::formatCnab('X', $boleto->getPagador()->getNome(), 40));
         $this->add(74, 113, Util::formatCnab('X', $boleto->getPagador()->getEndereco(), 40));
         $this->add(114, 128, Util::formatCnab('X', $boleto->getPagador()->getBairro(), 15));
@@ -278,9 +279,9 @@ class Sicredi extends AbstractRemessa implements RemessaContract
         $this->add(213, 232, '');
         $this->add(233, 240, '');
 
-        if($boleto->getSacadorAvalista()) {
-            $this->add(154, 154, strlen(Util::onlyNumbers($boleto->getSacadorAvalista()->getDocumento())) == 14 ? 2 : 1);
-            $this->add(155, 169, Util::formatCnab('9', Util::onlyNumbers($boleto->getSacadorAvalista()->getDocumento()), 15));
+        if ($boleto->getSacadorAvalista()) {
+            $this->add(154, 154, strlen(Util::onlyUpperAlphaNumeric($boleto->getSacadorAvalista()->getDocumento())) == 14 ? 2 : 1);
+            $this->add(155, 169, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($boleto->getSacadorAvalista()->getDocumento()), 15));
             $this->add(170, 209, Util::formatCnab('X', $boleto->getSacadorAvalista()->getNome(), 30));
         }
 
@@ -310,8 +311,8 @@ class Sicredi extends AbstractRemessa implements RemessaContract
             $this->add(16, 17, self::OCORRENCIA_ALT_OUTROS_DADOS);
         }
         $this->add(18, 19, '01');
-        $this->add(20, 20, strlen(Util::onlyNumbers($boleto->getSacadorAvalista()->getDocumento())) == 14 ? 2 : 1);
-        $this->add(21, 35, Util::formatCnab('9', Util::onlyNumbers($boleto->getSacadorAvalista()->getDocumento()), 15));
+        $this->add(20, 20, strlen(Util::onlyUpperAlphaNumeric($boleto->getSacadorAvalista()->getDocumento())) == 14 ? 2 : 1);
+        $this->add(21, 35, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($boleto->getSacadorAvalista()->getDocumento()), 15));
         $this->add(36, 75, Util::formatCnab('X', $boleto->getSacadorAvalista()->getNome(), 40));
         $this->add(76, 115, Util::formatCnab('X', $boleto->getSacadorAvalista()->getEndereco(), 40));
         $this->add(116, 130, Util::formatCnab('X', $boleto->getSacadorAvalista()->getBairro(), 15));
@@ -338,8 +339,8 @@ class Sicredi extends AbstractRemessa implements RemessaContract
         $this->add(4, 7, '0000');
         $this->add(8, 8, '0');
         $this->add(9, 17, '');
-        $this->add(18, 18, strlen(Util::onlyNumbers($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
-        $this->add(19, 32, Util::formatCnab('9', Util::onlyNumbers($this->getBeneficiario()->getDocumento()), 14));
+        $this->add(18, 18, strlen(Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
+        $this->add(19, 32, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento()), 14));
         $this->add(33, 52, Util::formatCnab('X', '', 20));
         $this->add(53, 57, Util::formatCnab('9', $this->getAgencia(), 5));
         $this->add(58, 58, '');
@@ -382,8 +383,8 @@ class Sicredi extends AbstractRemessa implements RemessaContract
         $this->add(12, 13, '');
         $this->add(14, 16, '040');
         $this->add(17, 17, '');
-        $this->add(18, 18, strlen(Util::onlyNumbers($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
-        $this->add(19, 33, Util::formatCnab('9', Util::onlyNumbers($this->getBeneficiario()->getDocumento()), 15));
+        $this->add(18, 18, strlen(Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
+        $this->add(19, 33, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento()), 15));
         $this->add(34, 53, Util::formatCnab('X', '', 20));
         $this->add(54, 58, Util::formatCnab('9', $this->getAgencia(), 5));
         $this->add(59, 59, '');
@@ -408,7 +409,7 @@ class Sicredi extends AbstractRemessa implements RemessaContract
     {
         $this->iniciaTrailerLote();
 
-        $valor = array_reduce($this->boletos, function($valor, $boleto) {
+        $valor = array_reduce($this->boletos, function ($valor, $boleto) {
             return $valor + $boleto->getValor();
         }, 0);
 

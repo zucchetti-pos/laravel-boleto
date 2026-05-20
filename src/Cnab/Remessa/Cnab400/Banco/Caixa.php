@@ -1,4 +1,5 @@
 <?php
+
 namespace Eduardokum\LaravelBoleto\Cnab\Remessa\Cnab400\Banco;
 
 use Eduardokum\LaravelBoleto\Cnab\Remessa\Cnab400\AbstractRemessa;
@@ -156,8 +157,8 @@ class Caixa  extends AbstractRemessa implements RemessaContract
         $this->iniciaDetalhe();
 
         $this->add(1, 1, '1');
-        $this->add(2, 3, strlen(Util::onlyNumbers($this->getBeneficiario()->getDocumento())) == 14 ? '02' : '01');
-        $this->add(4, 17, Util::formatCnab('9', Util::onlyNumbers($this->getBeneficiario()->getDocumento()), 14));
+        $this->add(2, 3, strlen(Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento())) == 14 ? '02' : '01');
+        $this->add(4, 17, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento()), 14));
         if ($this->isLayout007()) {
             $this->add(18, 20, '000');
             $this->add(21, 27, Util::formatCnab('9', $this->getBeneficiario()->getCodigoBeneficiario(), 7));
@@ -207,8 +208,8 @@ class Caixa  extends AbstractRemessa implements RemessaContract
         $this->add(180, 192, Util::formatCnab('9', $boleto->getDesconto(), 13, 2));
         $this->add(193, 205, Util::formatCnab('9', 0, 13, 2));
         $this->add(206, 218, Util::formatCnab('9', 0, 13, 2));
-        $this->add(219, 220, strlen(Util::onlyNumbers($boleto->getPagador()->getDocumento())) == 14 ? '02' : '01');
-        $this->add(221, 234, Util::formatCnab('9', Util::onlyNumbers($boleto->getPagador()->getDocumento()), 14));
+        $this->add(219, 220, strlen(Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento())) == 14 ? '02' : '01');
+        $this->add(221, 234, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento()), 14));
         $this->add(235, 274, Util::formatCnab('X', $boleto->getPagador()->getNome(), 40));
         $this->add(275, 314, Util::formatCnab('X', $boleto->getPagador()->getEndereco(), 40));
         $this->add(315, 326, Util::formatCnab('X', $boleto->getPagador()->getBairro(), 12));

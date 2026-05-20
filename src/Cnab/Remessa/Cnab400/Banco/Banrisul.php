@@ -89,7 +89,7 @@ class Banrisul extends AbstractRemessa implements RemessaContract
      *
      * @var array
      */
-    protected $carteiras =['1', '3', '4', '5', '6', '7', '8', 'C', 'D', 'E', 'F', 'H', 'I', 'K', 'M', 'N', 'R', 'S', 'X'];
+    protected $carteiras = ['1', '3', '4', '5', '6', '7', '8', 'C', 'D', 'E', 'F', 'H', 'I', 'K', 'M', 'N', 'R', 'S', 'X'];
 
     /**
      * Caracter de fim de linha
@@ -134,7 +134,7 @@ class Banrisul extends AbstractRemessa implements RemessaContract
 
     public function setTeste($teste)
     {
-        $this->teste = (boolean) $teste;
+        $this->teste = (bool) $teste;
         return $this;
     }
     /**
@@ -289,14 +289,14 @@ class Banrisul extends AbstractRemessa implements RemessaContract
         $this->add(162, 173, Util::formatCnab('9', $boleto->getMoraDia(), 12, 2));
         $this->add(174, 192, '');
 
-		if ($boleto->getDesconto() > 0) {
-			$this->add(174, 179, $boleto->getDataDesconto()->format('dmy'));
-			$this->add(180, 192, Util::formatCnab('9', $boleto->getDesconto(), 13, 2));
-		}
+        if ($boleto->getDesconto() > 0) {
+            $this->add(174, 179, $boleto->getDataDesconto()->format('dmy'));
+            $this->add(180, 192, Util::formatCnab('9', $boleto->getDesconto(), 13, 2));
+        }
 
         $this->add(193, 205, Util::formatCnab('9', 0, 13, 2));
         $this->add(206, 218, Util::formatCnab('9', 0, 13, 2));
-        $this->add(219, 220, strlen(Util::onlyNumbers($boleto->getPagador()->getDocumento())) == 14 ? '02' : '01');
+        $this->add(219, 220, strlen(Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento())) == 14 ? '02' : '01');
         $this->add(221, 234, Util::formatCnab('9L', $boleto->getPagador()->getDocumento(), 14));
         $this->add(235, 269, Util::formatCnab('X', $boleto->getPagador()->getNome(), 35));
         $this->add(270, 274, '');
@@ -308,9 +308,9 @@ class Banrisul extends AbstractRemessa implements RemessaContract
         $this->add(335, 349, Util::formatCnab('X', $boleto->getPagador()->getCidade(), 15));
         $this->add(350, 351, Util::formatCnab('X', $boleto->getPagador()->getUf(), 2));
 
-        if ($this->isCarteiraRSX()){
+        if ($this->isCarteiraRSX()) {
             $this->add(352, 371, '');
-        }else{
+        } else {
             $this->add(352, 355, '');
             $this->add(356, 357, '');
             $this->add(358, 369, '');

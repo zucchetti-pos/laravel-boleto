@@ -248,6 +248,11 @@ final class Util
         return self::numbersOnly($string);
     }
 
+    public static function onlyUpperAlphaNumeric($string)
+    {
+        return preg_replace('/[^A-Z0-9]/', '', $string);
+    }
+
     /**
      * Retorna somente os digitos da string
      *

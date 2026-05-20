@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: simetriatecnologia
@@ -151,9 +152,9 @@ class Bb extends AbstractRemessa implements RemessaContract
         $this->boletos[] = $boleto;
         $this->segmentoP($boleto);
         $this->segmentoQ($boleto);
-		if($boleto->getStatus() == $boleto::STATUS_REGISTRO) {
-			$this->segmentoR($boleto);
-		}
+        if ($boleto->getStatus() == $boleto::STATUS_REGISTRO) {
+            $this->segmentoR($boleto);
+        }
         return $this;
     }
 
@@ -256,8 +257,8 @@ class Bb extends AbstractRemessa implements RemessaContract
         if ($boleto->getStatus() == $boleto::STATUS_CUSTOM) {
             $this->add(16, 17, sprintf('%2.02s', $boleto->getComando()));
         }
-        $this->add(18, 18, strlen(Util::onlyNumbers($boleto->getPagador()->getDocumento())) == 14 ? 2 : 1);
-        $this->add(19, 33, Util::formatCnab('9', Util::onlyNumbers($boleto->getPagador()->getDocumento()), 15));
+        $this->add(18, 18, strlen(Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento())) == 14 ? 2 : 1);
+        $this->add(19, 33, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento()), 15));
         $this->add(34, 73, Util::formatCnab('X', $boleto->getPagador()->getNome(), 40));
         $this->add(74, 113, Util::formatCnab('X', $boleto->getPagador()->getEndereco(), 40));
         $this->add(114, 128, Util::formatCnab('X', $boleto->getPagador()->getBairro(), 15));
@@ -271,9 +272,9 @@ class Bb extends AbstractRemessa implements RemessaContract
         $this->add(210, 212, '000');
         $this->add(213, 240, '');
 
-        if($boleto->getSacadorAvalista()) {
-            $this->add(154, 154, strlen(Util::onlyNumbers($boleto->getSacadorAvalista()->getDocumento())) == 14 ? 2 : 1);
-            $this->add(155, 169, Util::formatCnab('9', Util::onlyNumbers($boleto->getSacadorAvalista()->getDocumento()), 15));
+        if ($boleto->getSacadorAvalista()) {
+            $this->add(154, 154, strlen(Util::onlyUpperAlphaNumeric($boleto->getSacadorAvalista()->getDocumento())) == 14 ? 2 : 1);
+            $this->add(155, 169, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($boleto->getSacadorAvalista()->getDocumento()), 15));
             $this->add(170, 209, Util::formatCnab('X', $boleto->getSacadorAvalista()->getNome(), 30));
         }
 
@@ -345,8 +346,8 @@ class Bb extends AbstractRemessa implements RemessaContract
         $this->add(4, 7, '0000');
         $this->add(8, 8, '0');
         $this->add(9, 17, '');
-        $this->add(18, 18, strlen(Util::onlyNumbers($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
-        $this->add(19, 32, Util::formatCnab('9', Util::onlyNumbers($this->getBeneficiario()->getDocumento()), 14));
+        $this->add(18, 18, strlen(Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
+        $this->add(19, 32, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento()), 14));
         $this->add(33, 41, Util::formatCnab('9', Util::onlyNumbers($this->getConvenio()), 9));
         $this->add(42, 45, '0014');
         $this->add(46, 47, Util::formatCnab('9', $this->getCarteira(), 2));
@@ -391,8 +392,8 @@ class Bb extends AbstractRemessa implements RemessaContract
         $this->add(12, 13, '');
         $this->add(14, 16, '042');
         $this->add(17, 17, '');
-        $this->add(18, 18, strlen(Util::onlyNumbers($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
-        $this->add(19, 33, Util::formatCnab('9', Util::onlyNumbers($this->getBeneficiario()->getDocumento()), 15));
+        $this->add(18, 18, strlen(Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento())) == 14 ? 2 : 1);
+        $this->add(19, 33, Util::formatCnab('9', Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento()), 15));
         $this->add(34, 42, Util::formatCnab('9', Util::onlyNumbers($this->getConvenio()), 9));
         $this->add(43, 46, '0014');
         $this->add(47, 48, Util::formatCnab('9', $this->getCarteira(), 2));
@@ -456,7 +457,8 @@ class Bb extends AbstractRemessa implements RemessaContract
      *
      * @return mixed|string
      */
-    private function nossoNumero(BoletoContract $boleto) {
+    private function nossoNumero(BoletoContract $boleto)
+    {
         $convenio = (int) Util::onlyNumbers($this->getConvenio());
         if ($convenio > 1000000) {
             return $boleto->getNossoNumero();
