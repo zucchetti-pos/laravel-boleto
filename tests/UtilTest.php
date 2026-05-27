@@ -29,6 +29,7 @@ class UtilTest extends TestCase
         $this->assertEquals('123', Util::onlyNumbers('asd123'));
         $this->assertEquals('asd123', Util::alphanumberOnly('_*(asd123)*_'));
         $this->assertEquals('asd123', Util::onlyAlphanumber('_*(asd123)*_'));
+        $this->assertEquals('AB1234', Util::onlyUpperAlphaNumeric('AB-12_cd34'));
         $this->assertEquals('AaEeIiOoUu', Util::normalizeChars('ÁáÉéÍiÓóÚú'));
     }
 

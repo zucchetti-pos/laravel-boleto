@@ -143,5 +143,9 @@ class PessoaTest extends TestCase
         $this->assertEquals('CEI', $pessoa->getTipoDocumento());
         $this->assertEquals('99.99999.9-99', $pessoa->getDocumento());
 
+        $pessoa->setDocumento('AB12.CD34/EF56-GH');
+        $this->assertEquals('CNPJ', $pessoa->getTipoDocumento());
+        $this->assertEquals('AB.12C.D34/EF56-GH', $pessoa->getDocumento());
+
     }
 }

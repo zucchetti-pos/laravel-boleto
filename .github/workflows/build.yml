@@ -56,7 +56,6 @@ jobs:
       # Necessário para usar a versão correta de teste do laravel
       - name: Setup Laravel
         run: |
-          composer require "orchestra/testbench=*" --no-update --no-suggest --ignore-platform-reqs --dev
           composer require "laravel/framework=${{ matrix.laravel }}" --no-update --no-suggest --ignore-platform-reqs
 
       - name: Get composer cache directory
