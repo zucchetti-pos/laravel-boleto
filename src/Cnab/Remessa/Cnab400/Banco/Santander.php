@@ -167,7 +167,7 @@ class Santander extends AbstractRemessa implements RemessaContract
 
         $this->add(1, 1, '1');
         $this->add(2, 3, strlen(Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento())) == 14 ? '02' : '01');
-        $this->add(4, 17, Util::formatCnab('9L', $this->getBeneficiario()->getDocumento(), 14));
+        $this->add(4, 17, Util::formatCnab('AL', $this->getBeneficiario()->getDocumento(), 14));
         $this->add(18, 37, substr($this->getAgencia(), 0, 8)
             . str_pad($this->getBeneficiario()->getCodigoBeneficiario(), 8, '0', STR_PAD_LEFT)
             . substr($this->getConta(), 0, 8));
@@ -220,7 +220,7 @@ class Santander extends AbstractRemessa implements RemessaContract
         $this->add(193, 205, Util::formatCnab('9', 0, 13, 2));
         $this->add(206, 218, Util::formatCnab('9', 0, 13, 2));
         $this->add(219, 220, strlen(Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento())) == 14 ? '02' : '01');
-        $this->add(221, 234, Util::formatCnab('9L', $boleto->getPagador()->getDocumento(), 14));
+        $this->add(221, 234, Util::formatCnab('AL', $boleto->getPagador()->getDocumento(), 14));
         $this->add(235, 274, Util::formatCnab('X', $boleto->getPagador()->getNome(), 40));
         $this->add(275, 314, Util::formatCnab('X', $boleto->getPagador()->getEndereco(), 40));
         $this->add(315, 326, Util::formatCnab('X', $boleto->getPagador()->getBairro(), 12));

@@ -166,7 +166,7 @@ class Bancoob extends AbstractRemessa implements RemessaContract
 
         $this->add(1, 1, 1);
         $this->add(2, 3, strlen(Util::onlyUpperAlphaNumeric($this->getBeneficiario()->getDocumento())) == 14 ? '02' : '01');
-        $this->add(4, 17, Util::formatCnab('9L', $this->getBeneficiario()->getDocumento(), 14));
+        $this->add(4, 17, Util::formatCnab('AL', $this->getBeneficiario()->getDocumento(), 14));
         $this->add(18, 21, Util::formatCnab('9', $this->getAgencia(), 4));
         $this->add(22, 22, CalculoDv::bancoobAgencia($this->getAgencia()));
         $this->add(23, 30, Util::formatCnab('9', $this->getConta(), 8));
@@ -230,7 +230,7 @@ class Bancoob extends AbstractRemessa implements RemessaContract
         $this->add(194, 205, Util::formatCnab('9', 0, 12, 2));
         $this->add(206, 218, Util::formatCnab('9', 0, 13, 2));
         $this->add(219, 220, strlen(Util::onlyUpperAlphaNumeric($boleto->getPagador()->getDocumento())) == 14 ? '02' : '01');
-        $this->add(221, 234, Util::formatCnab('9L', $boleto->getPagador()->getDocumento(), 14));
+        $this->add(221, 234, Util::formatCnab('AL', $boleto->getPagador()->getDocumento(), 14));
         $this->add(235, 271, Util::formatCnab('X', $boleto->getPagador()->getNome(), 37));
         $this->add(272, 274, '');
         $this->add(275, 314, Util::formatCnab('X', $boleto->getPagador()->getEndereco(), 40));
