@@ -477,9 +477,12 @@ final class Util
     {
         $tipo = self::upper($tipo);
         $valor = self::upper(self::normalizeChars($valor));
-        if (in_array($tipo, array('9', 9, 'N', '9L', 'NL'))) {
+        if (in_array($tipo, array('9', 9, 'N', '9L', 'NL', 'AL'))) {
             if ($tipo == '9L' || $tipo == 'NL') {
                 $valor = self::onlyNumbers($valor);
+            }
+            if ($tipo == 'AL') {
+                $valor = self::onlyUpperAlphaNumeric($valor);
             }
             $left = '';
             $sFill = 0;
