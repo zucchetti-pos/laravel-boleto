@@ -1,15 +1,16 @@
 <?php
+
 namespace Eduardokum\LaravelBoleto\Tests;
 
-use Orchestra\Testbench\TestCase as OrchestraTestCase;
+use PHPUnit\Framework\TestCase as BaseTestCase;
 use PHPUnit\Framework\Constraint\IsType;
 use PHPUnit\Framework\Constraint\StringContains;
 
-class TestCase extends OrchestraTestCase
+class TestCase extends BaseTestCase
 {
     public static function assertIsArray($actual, string $message = ''): void
     {
-        if (method_exists(OrchestraTestCase::class, 'assertIsArray')) {
+        if (method_exists(BaseTestCase::class, 'assertIsArray')) {
             parent::assertIsArray($actual, $message);
         } else {
             static::assertThat(
@@ -22,7 +23,7 @@ class TestCase extends OrchestraTestCase
 
     public static function assertStringContainsString(string $needle, string $haystack, string $message = ''): void
     {
-        if (method_exists(OrchestraTestCase::class, 'assertStringContainsString')) {
+        if (method_exists(BaseTestCase::class, 'assertStringContainsString')) {
             parent::assertStringContainsString($needle, $haystack, $message);
         } else {
             $constraint = new StringContains($needle, false);
